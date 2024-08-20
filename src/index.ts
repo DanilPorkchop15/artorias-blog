@@ -1,13 +1,14 @@
-import express, {Express, Request, Response} from 'express';
+import express, {Express} from 'express';
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
-import auth from "./routes/api/auth";
+import authRoutes from "./routes/api/AuthRoutes";
+import postRoutes from "./routes/api/PostRoutes";
 
 dotenv.config();
 
 const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB || "")
-  .then(r => {
+  .then(() => {
   console.log("Connected to MongoDB");
 })
   .catch((e) => {
@@ -18,7 +19,8 @@ const app: Express = express();
 const port = process.env.PORT || 3030;
 app.use(express.json());
 
-app.use("/api/auth", auth);
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
 
 
 

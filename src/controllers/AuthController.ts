@@ -1,23 +1,26 @@
-import { Router, Request, Response } from "express";
-import {registerValidation} from "../../validations/auth";
+import {Request, Response} from "express";
+import User from "../models/User";
 import {validationResult} from "express-validator";
-import User from "../../models/user";
-import jwt, {Secret, JwtPayload} from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import {Document} from "mongoose";
+import bcrypt from "bcrypt";
+import jwt, {Secret} from "jsonwebtoken";
 
-
-const router = Router();
-
-router.post('/login', async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({email: req.body.email});
     if (!user) {
-      return res.status(404).json({message: 'User not found'});
+      return res
+        .status(404)
+        .json({
+          message: 'User not found'
+        });
     }
     const isValidPass = await bcrypt.compare(req.body.password, user.password);
     if (!isValidPass) {
-      return res.status(404).json({message: 'Invalid password'});
+      return res
+        .status(404)
+        .json({
+          message: 'Invalid password'
+        });
     }
     const token = jwt.sign({
       _id: user._id
@@ -35,9 +38,9 @@ router.post('/login', async (req: Request, res: Response) => {
       message: 'Login error'
     });
   }
-});
+}
 
-router.post('/register', registerValidation, async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
     return res.status(400).json({error: error.array()});
@@ -72,6 +75,24 @@ router.post('/register', registerValidation, async (req: Request, res: Response)
       message: 'Registration error'
     });
   }
-});
+}
 
-export default router
+export const getUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({
+          message: 'User not found'
+        });
+    }
+    const {password, ...userData} = user._doc;
+    res.json(userData);
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({
+      message: 'Get user error'
+    });
+  }
+}

@@ -1,8 +1,9 @@
 import express, {Express} from 'express';
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
-import authRoutes from "./routes/api/AuthRoutes";
-import postRoutes from "./routes/api/PostRoutes";
+import AuthRoutes from "./routes/api/AuthRoutes";
+import PostRoutes from "./routes/api/PostRoutes";
+import StorageRoutes from "./routes/api/StorageRoutes";
 
 dotenv.config();
 
@@ -17,13 +18,21 @@ mongoose.connect(mongoDB || "")
 
 const app: Express = express();
 const port = process.env.PORT || 3030;
+
 app.use(express.json());
-
-app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes);
-
-
+app.use("/api/auth", AuthRoutes);
+app.use("/api/posts",PostRoutes);
+app.use("/api/upload", express.static("src/uploads") );
+app.use('/api/upload', StorageRoutes);
 
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+  console.log(`
+  
+░░      ░░░       ░░░        ░░░      ░░░       ░░░        ░░░      ░░░░      ░░
+▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒▒▒▒
+▓  ▓▓▓▓  ▓▓       ▓▓▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓  ▓▓       ▓▓▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓  ▓▓▓      ▓▓
+█        ██  ███  ██████  █████  ████  ██  ███  ██████  █████        ████████  █
+█  ████  ██  ████  █████  ██████      ███  ████  ██        ██  ████  ███      ██
+                                                                             
+  ⚡️[server]: Server is running at http://localhost:${port}`);
 });

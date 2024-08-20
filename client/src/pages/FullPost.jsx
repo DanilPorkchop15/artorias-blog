@@ -4,8 +4,8 @@ import { Post } from "../components";
 import { Index } from "../components";
 import { CommentsBlock } from "../components";
 import {useParams} from "react-router-dom";
-import {useNavigate} from "react-router-dom";
 import axios from "../axios";
+import ReactMarkdown from "react-markdown";
 
 export const FullPost = () => {
   const params = useParams()
@@ -38,9 +38,9 @@ export const FullPost = () => {
         tags={data.tags}
         isFullPost
       >
-        <p>
+        <ReactMarkdown>
           {data.text}
-        </p>
+        </ReactMarkdown>
       </Post>
       <CommentsBlock
         items={[

@@ -51,7 +51,7 @@ export const deletePost = async (req: Request, res: Response) => {
           message: 'Forbidden'
         })
     }
-    const post = await Post.findByIdAndDelete(req.params.id)
+    const post = await Post.findByIdAndDelete({_id: req.params.id})
     if (!post) {
       return res
         .status(404)
@@ -73,7 +73,18 @@ export const deletePost = async (req: Request, res: Response) => {
 export const getPost = async (req: Request, res: Response) => {
   try {
     const post = await Post
-      .findByIdAndUpdate(req.params.id, {$inc: {views: 1}})
+      .findByIdAndUpdate({
+        _id: req.params.id
+        },
+        {
+          $inc: {
+            views: 1
+          }
+        },
+        {
+          returnDocument: 'after'
+        }
+        )
       .populate("user")
       .exec()
     if (!post) {

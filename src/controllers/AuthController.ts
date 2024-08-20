@@ -1,6 +1,5 @@
 import {Request, Response} from "express";
 import User from "../models/User";
-import {validationResult} from "express-validator";
 import bcrypt from "bcrypt";
 import jwt, {Secret} from "jsonwebtoken";
 
@@ -41,10 +40,6 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const register = async (req: Request, res: Response) => {
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    return res.status(400).json({error: error.array()});
-  }
   const password: string = req.body.password;
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);

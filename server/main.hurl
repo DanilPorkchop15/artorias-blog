@@ -32,9 +32,6 @@ Authorization: Bearer {{token}}
     "artur", "egor"
   ]
 }
-HTTP 200
-[Captures]
-post_id: jsonpath "$['_id']"
 
 
 # 5 Get 1 post

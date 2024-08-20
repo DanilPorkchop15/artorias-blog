@@ -30,7 +30,7 @@ export const Home = () => {
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) => (isPostsLoading ?
               <Post key={index} isLoading /> :
             <Post
-              id={obj._id}
+              _id={obj._id}
               title={obj.title}
               imageUrl={obj.imageUrl}
               user={obj.user}

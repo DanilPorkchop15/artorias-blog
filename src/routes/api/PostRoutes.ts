@@ -13,6 +13,6 @@ router.post('/', postCreateValidation, checkAuth, createPost)
 
 router.put('/:id', postCreateValidation, checkAuth, updatePost)
 
-router.delete('/:id', checkAuth,deletePost)
+router.delete('/:id', checkAuth, deletePost)
 
 export default router

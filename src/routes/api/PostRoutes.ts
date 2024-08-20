@@ -1,21 +1,21 @@
 import {Router} from "express";
 import {postCreateValidation} from "../../validations/PostValidation";
-import {createPost, deletePost, getAllPosts, getPost, updatePost} from "../../controllers/PostController";
+import { PostController} from "../../controllers";
 import checkAuth from "../../middleware/authMiddleware";
 import {handleValidationErrorsMiddleware} from "../../middleware/handleValidationErrorsMiddleware";
 
 const router: Router = Router();
 
-router.get('/', getAllPosts)
+router.get('/', PostController.getAllPosts)
 
-router.get('/:id', getPost)
+router.get('/:id', PostController.getPost)
 
 router.post(
   '/',
   postCreateValidation,
   handleValidationErrorsMiddleware,
   checkAuth,
-  createPost
+  PostController.createPost
 )
 
 router.put(
@@ -23,9 +23,9 @@ router.put(
   postCreateValidation,
   handleValidationErrorsMiddleware,
   checkAuth,
-  updatePost
+  PostController.updatePost
 )
 
-router.delete('/:id', checkAuth, deletePost)
+router.delete('/:id', checkAuth, PostController.deletePost)
 
 export default router

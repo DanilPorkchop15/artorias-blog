@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {loginValidation, registerValidation} from "../../validations/AuthValidation";
 import checkAuth from "../../middleware/authMiddleware";
-import {getUser, login, register} from "../../controllers/AuthController";
+import {AuthController} from "../../controllers";
 import {handleValidationErrorsMiddleware} from "../../middleware/handleValidationErrorsMiddleware";
 
 
@@ -11,16 +11,16 @@ router.post(
   '/login',
   loginValidation,
   handleValidationErrorsMiddleware,
-  login
+  AuthController.login
 );
 
 router.post(
   '/register',
   registerValidation,
   handleValidationErrorsMiddleware,
-  register
+  AuthController.register
 );
 
-router.get('/me', checkAuth, getUser);
+router.get('/me', checkAuth, AuthController.getUser);
 
 export default router

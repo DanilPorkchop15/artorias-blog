@@ -14,7 +14,7 @@ export const createPost = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e)
     res.status(400).json({
-      message: 'Create post error'
+      message: e
     })
   }
 }
@@ -114,6 +114,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
     const posts = await Post
       .find()
       .populate("user")
+      .sort({createdAt: -1})
       .exec()
     if (!posts) {
       return res

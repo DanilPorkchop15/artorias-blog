@@ -6,10 +6,10 @@ POST http://localhost:3030/post
 }
 
 # 3
-POST http://localhost:3030/auth/register
+POST http://localhost:3030/api/auth/register
 {
-  "email": "danil@mail.com",
-  "password": "qwe1",
+  "email": "danil1@mail.com",
+  "password": "qwe1qwe1",
   "fullName": "Danil Kostin",
   "avatar": "qwe.com"
 }

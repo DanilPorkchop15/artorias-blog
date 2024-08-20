@@ -21,19 +21,24 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const updatePost = async (req: Request, res: Response) => {
   try {
-    if (req.body.userId !== req.params.id) {
+    const post = await Post.findById(req.params.id)
+    if (req.body.userId !== post?.user.toString()) {
       return res.status(403).json({message: 'Forbidden'})
     }
-    const post = await Post
+    const newPost = await Post
       .findByIdAndUpdate(req.params.id, {
-      $set: req.body
+      title: req.body.title,
+      text: req.body.text,
+      imageUrl: req.body.imageUrl,
+      tags: req.body.tags,
+      user: req.body.userId
     }, {new: true})
       .populate("user")
       .exec()
-    if (!post) {
+    if (!newPost) {
       return res.status(404).json({message: 'Post not found'})
     }
-    res.json(post)
+    res.json(newPost)
   } catch (e) {
     console.log(e)
     res.status(400).json({

@@ -44,3 +44,15 @@ GET http://localhost:3030/api/posts/66c4a563a924f901451c8369
 # 6 Get all posts
 GET http://localhost:3030/api/posts
 
+
+# 7 Update post
+PUT http://localhost:3030/api/posts/66c4a563a924f901451c8369
+Authorization: Bearer {{token}}
+{
+  "title": "XXX MEGA HELL",
+  "text": "Hello Goven XXXHello Goven XXXHello Goven XXXHello Goven XXX",
+  "imageUrl": "xxx.com",
+  "tags": [
+    "artur", "egor", "lida"
+  ]
+}

@@ -1,6 +1,7 @@
 import express, {Express} from 'express';
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
+import cors from "cors";
 import AuthRoutes from "./routes/api/AuthRoutes";
 import PostRoutes from "./routes/api/PostRoutes";
 import StorageRoutes from "./routes/api/StorageRoutes";
@@ -20,6 +21,7 @@ const app: Express = express();
 const port = process.env.PORT || 3030;
 
 app.use(express.json());
+app.use(cors());
 app.use("/api/auth", AuthRoutes);
 app.use("/api/posts",PostRoutes);
 app.use("/api/upload", express.static("src/uploads") );

@@ -132,3 +132,18 @@ export const getAllPosts = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const getAllTags = async (req: Request, res: Response) => {
+  try {
+    const posts = await Post.find().limit(5).exec()
+    const tags = posts.map(obj => obj.tags).flat().slice(0, 5)
+    res.json(tags)
+  } catch (e) {
+    console.log(e)
+    res
+      .status(400)
+      .json({
+      message: 'Get tags error'
+    })
+  }
+}

@@ -8,8 +8,7 @@ const router: Router = Router();
 
 router.get('/', PostController.getAllPosts)
 
-router.get('/:id', PostController.getPost)
-
+router.get('/tags', PostController.getAllTags)
 router.post(
   '/',
   postCreateValidation,
@@ -18,6 +17,8 @@ router.post(
   PostController.createPost
 )
 
+router.get('/:id', PostController.getPost)
+
 router.put(
   '/:id',
   postCreateValidation,
@@ -25,6 +26,7 @@ router.put(
   checkAuth,
   PostController.updatePost
 )
+
 
 router.delete('/:id', checkAuth, PostController.deletePost)
 

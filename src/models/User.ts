@@ -1,15 +1,6 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model } from "mongoose";
+import {IUserDocument, TUser} from "../types/User.type";
 
-export type TUser = {
-  fullName: string;
-  password: string;
-  email: string;
-  avatar: string;
-}
-
-export interface IUser extends TUser, Document {
-  _doc?: any
-}
 
 const userSchema: Schema = new Schema<TUser>({
   fullName: {
@@ -30,4 +21,4 @@ const userSchema: Schema = new Schema<TUser>({
   timestamps: true
 });
 
-export default model<IUser>("User", userSchema);
+export default model<IUserDocument>("User", userSchema);

@@ -4,6 +4,7 @@ import { Post } from "../components";
 import { Index } from "../components";
 import { CommentsBlock } from "../components";
 import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "../axios";
 
 export const FullPost = () => {

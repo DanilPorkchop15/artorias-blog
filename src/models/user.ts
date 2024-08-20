@@ -2,19 +2,21 @@ import { Schema, model, Document } from "mongoose";
 
 export type TUser = {
   fullName: string;
-  passwordHash: string;
+  password: string;
   email: string;
   avatar: string;
 }
 
-export interface IUser extends TUser, Document {}
+export interface IUser extends TUser, Document {
+  _doc?: any
+}
 
 const userSchema: Schema = new Schema<TUser>({
   fullName: {
     type: String,
     required: true
   },
-  passwordHash: {
+  password: {
     type: String,
     required: true
   },

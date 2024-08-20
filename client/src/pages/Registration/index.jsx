@@ -7,8 +7,13 @@ import Avatar from '@mui/material/Avatar';
 
 import styles from './Login.module.scss';
 import {useForm} from "react-hook-form";
+import {fetchLogin, fetchRegister, selectIsAuth} from "../../redux/slices/auth";
+import {Navigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 export const Registration = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth);
   const {
     register,
     handleSubmit,
@@ -23,8 +28,23 @@ export const Registration = () => {
     mode: 'onChange'
   })
 
-  const onSubmit =  (values) => {
-    console.log(values)
+  const onSubmit = async (values) => {
+    const data  = await dispatch(fetchRegister(values))
+
+    if (!data.payload) {
+      return alert('Не удалось зарегистрироваться')
+    }
+
+    if ('token' in data.payload) {
+      window.localStorage.setItem('token', data.payload.token)
+    } else {
+      alert('Не удалось зарегистрироваться')
+    }
+
+  }
+
+  if (isAuth) {
+    return <Navigate to="/" />
   }
   return (
     <Paper classes={{ root: styles.root }}>
